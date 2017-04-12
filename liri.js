@@ -16,8 +16,14 @@
      };
      client.get('statuses/user_timeline', params, function(error, tweets, response) {
          if (!error) {
-             console.log(tweets);
+           for(i = 0; i < tweets.length; i++) {
+             console.log(tweets[i].text);
          }
+       }
+
+       if (error) {
+         console.log("error occured: " + error);
+       }
      });
 
  }
@@ -34,7 +40,7 @@
              queryArray += myProcess[i] + " ";
          }
      }
-     console.log("This is my query array: " + queryArray);
+     //console.log("This is my query array: " + queryArray);
 
      spotify.search({
          type: 'track',
@@ -51,15 +57,20 @@
              console.log(data.tracks.items[0].external_urls);
              console.log(data.tracks.items[0].name);
          }
-
-         // Do something with 'data'
      });
 
 
  }
 
  if (myProcess[2] === "movie-this") {
-
+   var request = require('request');
+   movieTitle = process.argv[3];
+   console.log(movieTitle);
+   var queryURL = "http://www.omdbapi.com/?t=" + movieTitle;
+   request(queryURL, function (error, response, body) {
+     console.log(queryURL);
+     console.log(body);
+});
  }
 
  if (myProcess[2] === "do what it says") {
